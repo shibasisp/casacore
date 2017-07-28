@@ -30,7 +30,7 @@
 #include <casacore/python/Converters/PycBasicData.h>
 #include <casacore/python/Converters/PycArrayNP.h>
 
-using namespace boost::python;
+namespace py = pybind11;
 
 
 namespace casacore { namespace python {

@@ -34,7 +34,7 @@
 #include <boost/python/dict.hpp>
 #include <sysmodule.h>
 
-using namespace boost::python;
+namespace py = pybind11;
 
 namespace casacore { namespace python {
 

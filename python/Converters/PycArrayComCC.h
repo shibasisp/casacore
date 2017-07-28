@@ -41,7 +41,7 @@
 
   Bool isImported()
   {
-    using namespace boost::python;
+    namespace py = pybind11;
     // PySys_GetObject uses char* instead of const char*, so use a cast.
     const char* modStr = "modules";
     PyObject* mods = PySys_GetObject(const_cast<char*>(modStr));
@@ -367,7 +367,7 @@
       break;
     }
     throw AipsError ("PycArray: unknown python array data type");
-  } 
+  }
 
 
   // Instantiate the various templates.

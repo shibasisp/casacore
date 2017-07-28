@@ -56,7 +56,7 @@ namespace casacore { namespace python {
   (PyObject* obj_ptr,
    boost::python::converter::rvalue_from_python_stage1_data* data)
   {
-    using namespace boost::python;
+    namespace py = pybind11;
     void* storage = ((converter::rvalue_from_python_storage<Record>*)
 		     data)->storage.bytes;
     new (storage) Record();
@@ -67,7 +67,7 @@ namespace casacore { namespace python {
 
   Record casa_record_from_python::makeRecord (PyObject* obj_ptr)
   {
-    using namespace boost::python;
+    namespace py = pybind11;
     AlwaysAssert (PyDict_Check(obj_ptr), AipsError);
     dict d = extract<dict>(obj_ptr)();
     list keys = d.keys();

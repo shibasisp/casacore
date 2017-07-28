@@ -124,7 +124,7 @@ namespace casacore { namespace python { namespace numpy {
           PyObject* obj_ptr,
           boost::python::converter::rvalue_from_python_stage1_data* data)
 	{
-	  using namespace boost::python;
+	  namespace py = pybind11;
 	  void* storage = ((converter::rvalue_from_python_storage<T>*)
 		     data)->storage.bytes;
 	  new (storage) T();

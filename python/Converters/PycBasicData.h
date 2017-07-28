@@ -222,7 +222,7 @@ namespace casacore { namespace python {
   // href="http://www.boost.org/libs/python/doc/v2/faq.html">
   // Boost.Python FAQ. </a>
 
-  // @author Ralf W. Grosse-Kunstleve <rwgk@yahoo.com> of 
+  // @author Ralf W. Grosse-Kunstleve <rwgk@yahoo.com> of
   // <a href="http://www.lbl.gov/">Lawrence Berkeley National Laboratory</a>
   template < typename ContainerType >
   struct to_list
@@ -350,7 +350,7 @@ namespace casacore { namespace python {
     }
   };
 
-  // Converts an STL vector or casa Array of T objects to Python list. 
+  // Converts an STL vector or casa Array of T objects to Python list.
   // Copied from
   // scitbx/include/scitbx/boost_python/container_conversions.h that is
   // described in the <a
@@ -359,37 +359,37 @@ namespace casacore { namespace python {
   // @author Ralf W. Grosse-Kunstleve <rwgk@yahoo.com> of
   // <a href="http://www.lbl.gov/">Lawrence Berkeley National Laboratory</a>
   template < typename T >
-  struct std_vector_to_list 
+  struct std_vector_to_list
   {
     std_vector_to_list ()
     {
-      boost::python::to_python_converter < std::vector < T >, 
+      boost::python::to_python_converter < std::vector < T >,
 	                         to_list < std::vector < T > >  > ();
     }
   };
   template < typename T >
-  struct casa_array_to_list 
+  struct casa_array_to_list
   {
     casa_array_to_list ()
     {
-      boost::python::to_python_converter < casacore::Array < T >, 
+      boost::python::to_python_converter < casacore::Array < T >,
 	                         to_list < casacore::Array < T > >  > ();
     }
   };
   template < typename T >
-  struct casa_vector_to_list 
+  struct casa_vector_to_list
   {
     casa_vector_to_list ()
     {
-      boost::python::to_python_converter < casacore::Vector < T >, 
+      boost::python::to_python_converter < casacore::Vector < T >,
 	                         to_list < casacore::Vector < T > >  > ();
     }
   };
-  struct casa_iposition_to_list 
+  struct casa_iposition_to_list
   {
     casa_iposition_to_list ()
     {
-      boost::python::to_python_converter < casacore::IPosition, 
+      boost::python::to_python_converter < casacore::IPosition,
 	                         to_list < casacore::IPosition >  > ();
     }
   };
@@ -421,7 +421,7 @@ namespace casacore { namespace python {
     // that can be convertible to C++ container.
     static void* convertible(PyObject* obj_ptr)
     {
-      using namespace boost::python;
+      namespace py = pybind11;
       handle<> py_hdl(obj_ptr);
       if (PyErr_Occurred()) {
 	PyErr_Clear();
@@ -477,7 +477,7 @@ namespace casacore { namespace python {
       PyObject* obj_ptr,
       boost::python::converter::rvalue_from_python_stage1_data* data)
     {
-      using namespace boost::python;
+      namespace py = pybind11;
       using boost::python::converter::rvalue_from_python_storage;
       void* storage = (
         (rvalue_from_python_storage<ContainerType>*)
@@ -509,7 +509,7 @@ namespace casacore { namespace python {
       assert (getSeqObject (py_obj));
       fill_container (result, py_obj.ptr());
       //	ConversionPolicy::reserve(result, 1);
-      //	ConversionPolicy::set_value(result, 0, 
+      //	ConversionPolicy::set_value(result, 0,
       //	    extract<container_element_type>(py_flat.attr("__getitem__")(0)));
     }
 
@@ -524,7 +524,7 @@ namespace casacore { namespace python {
   private:
     static void fill_container (ContainerType& result, PyObject* obj_ptr)
     {
-      using namespace boost::python;
+      namespace py = pybind11;
       int obj_size = PyObject_Length(obj_ptr);
       handle<> obj_iter(PyObject_GetIter(obj_ptr));
       ConversionPolicy::reserve(result, obj_size);
@@ -542,7 +542,7 @@ namespace casacore { namespace python {
 
     static bool check_convertibility(PyObject* obj_ptr)
     {
-      using namespace boost::python;
+      namespace py = pybind11;
       handle<> obj_iter(allow_null(PyObject_GetIter(obj_ptr)));
       if (!obj_iter.get()) {       // must be convertible to an iterator
         PyErr_Clear();

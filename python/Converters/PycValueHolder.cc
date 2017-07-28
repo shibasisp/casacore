@@ -131,7 +131,7 @@ namespace casacore { namespace python {
   (PyObject* obj_ptr,
    boost::python::converter::rvalue_from_python_stage1_data* data)
   {
-    using namespace boost::python;
+    namespace py = pybind11;
     using boost::python::converter::rvalue_from_python_storage; // dito
     using boost::python::throw_error_already_set; // dito
     void* storage = ((rvalue_from_python_storage<ValueHolder>*)
@@ -144,7 +144,7 @@ namespace casacore { namespace python {
 
   ValueHolder casa_value_from_python::makeValueHolder (PyObject* obj_ptr)
   {
-    using namespace boost::python;
+    namespace py = pybind11;
     // An empty numarray is Py_None, so return an empty 0-dim Array.
     if (obj_ptr == Py_None) {
       return ValueHolder(0, True);
@@ -194,19 +194,19 @@ namespace casacore { namespace python {
     DataType dt = checkDataType (obj_ptr);
     switch (dt) {
     case TpBool:
-      return ValueHolder(from_python_sequence< Vector<Bool>, casa_variable_capacity_policy >::make_container (obj_ptr)); 
+      return ValueHolder(from_python_sequence< Vector<Bool>, casa_variable_capacity_policy >::make_container (obj_ptr));
     case TpInt:
-      return ValueHolder(from_python_sequence< Vector<Int>, casa_variable_capacity_policy >::make_container (obj_ptr)); 
+      return ValueHolder(from_python_sequence< Vector<Int>, casa_variable_capacity_policy >::make_container (obj_ptr));
     case TpUInt:
-      return ValueHolder(from_python_sequence< Vector<uInt>, casa_variable_capacity_policy >::make_container (obj_ptr)); 
+      return ValueHolder(from_python_sequence< Vector<uInt>, casa_variable_capacity_policy >::make_container (obj_ptr));
     case TpInt64:
-      return ValueHolder(from_python_sequence< Vector<Int64>, casa_variable_capacity_policy >::make_container (obj_ptr)); 
+      return ValueHolder(from_python_sequence< Vector<Int64>, casa_variable_capacity_policy >::make_container (obj_ptr));
     case TpDouble:
-      return ValueHolder(from_python_sequence< Vector<Double>, casa_variable_capacity_policy >::make_container (obj_ptr)); 
+      return ValueHolder(from_python_sequence< Vector<Double>, casa_variable_capacity_policy >::make_container (obj_ptr));
     case TpDComplex:
-      return ValueHolder(from_python_sequence< Vector<DComplex>, casa_variable_capacity_policy >::make_container (obj_ptr)); 
+      return ValueHolder(from_python_sequence< Vector<DComplex>, casa_variable_capacity_policy >::make_container (obj_ptr));
     case TpString:
-      return ValueHolder(from_python_sequence< Vector<String>, casa_variable_capacity_policy >::make_container (obj_ptr)); 
+      return ValueHolder(from_python_sequence< Vector<String>, casa_variable_capacity_policy >::make_container (obj_ptr));
     case TpOther:
       // empty sequence is set as empty 1-dim array
       return ValueHolder(1, True);
@@ -218,7 +218,7 @@ namespace casacore { namespace python {
 
   DataType casa_value_from_python::checkDataType (PyObject* obj_ptr)
   {
-    using namespace boost::python;
+    namespace py = pybind11;
     // Restriction to list, tuple, iter, xrange until
     // Boost.Python overload resolution is enhanced.
     if (!(PyList_Check(obj_ptr)
